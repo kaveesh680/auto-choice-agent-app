@@ -8,7 +8,13 @@ import ClaimTile from "../components/ClaimTile";
 export default function HomeScreen({navigation}) {
 
     const [username, setUserName] = useState('Kaveesh'); 
-    const [claims, setClaims]  = useState([1,2,3,4,5]);
+    const [claims, setClaims]  = useState([
+      {"claim_id":'1232232334334343434343434', "customer_name":'Kaveesh Charuka', "date":'2022/10/23', "status":'Active' },
+      {"claim_id":'5464354354534543534543543', "customer_name":'Pasan Madushan', "date":'2022/10/23', "status":'Active' },
+      {"claim_id":'7898764545465567675677675', "customer_name":'Dineth Madhu', "date":'2022/10/23', "status":'Active' },
+      {"claim_id":'1567656455345345765889675', "customer_name":'Lana Rose', "date":'2022/10/23', "status":'Active' },
+      {"claim_id":'0978767656454457464646353', "customer_name":'Bla Bla Bla', "date":'2022/10/23', "status":'Active' }
+    ]);
 
     const imageCustomer =  require('../assets/agent-blue.png');
     const imageVehicle =  require('../assets/vehicle.png');
@@ -39,8 +45,14 @@ export default function HomeScreen({navigation}) {
           <Heading color="#154897" marginBottom='5' marginTop={5}>ACTIVE CLAIMS</Heading>
 
           <View>
-            <ClaimTile />
-           </View>
+
+            {
+              claims.map((claim)=>(
+                <ClaimTile key={claim.claim_id} id={claim.claim_id} name={claim.customer_name} date={claim.date} status={claim.status} />
+              ))
+            }
+
+          </View>
 
         </View>
       </ScrollView>
