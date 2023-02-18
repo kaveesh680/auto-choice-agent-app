@@ -27,7 +27,7 @@ export default function HomeScreen({navigation}) {
         <Flex direction="row" mb="2.5" mt="7"> 
           <CustomButton text1='Register' text2='Customer' image={imageCustomer} buttonPress={()=>buttonPress('New_Customer')}/>
           <Spacer />
-          <CustomButton text1='Register' text2='Vehicle' image={imageVehicle} buttonPress={()=>buttonPress('Home')}/>
+          <CustomButton text1='Register' text2='Vehicle' image={imageVehicle} buttonPress={()=>buttonPress('New_Vehicle')}/>
         </Flex> 
       </View>
 
