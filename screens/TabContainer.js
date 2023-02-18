@@ -22,7 +22,7 @@ export default function TabContainer(){
                 initialRouteName={homeName}
                 screenOptions = {({route}) => ({
                     headerShown: false,
-                    tabBarActiveTintColor: "#1B2C56",
+                    tabBarActiveTintColor: "#154897",
                     tabBarStyle: [
                       {
                         display: "flex"
@@ -36,9 +36,9 @@ export default function TabContainer(){
                         if(rn === homeName){
                             iconName = focused ? 'home' : 'home-outline';
                         } else if (rn===claimName){
-                            iconName = focused ? 'language' : 'language-outline'
+                            iconName = focused ? 'document-text' : 'document-text'
                         } else if (rn === profileName){
-                            iconName = focused ? 'information-circle' : 'information-circle-outline'
+                            iconName = focused ? 'person' : 'person'
                         }
 
                         return <Ionicons name={iconName} size={size} color={color} />
