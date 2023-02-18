@@ -4,12 +4,12 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 //screens
-import HomeScreen from './Home.screen';
 import ClaimScreen from './Claim.screen';
 import ProfileScreen from './Profile.screen';
+import HomeStackScreen from './HomeStackScreen';
 
 //Screen names
-const homeName = 'Home';
+const homeName = 'HomeStack';
 const claimName  = 'Claims';
 const profileName = 'Profile';
 
@@ -17,7 +17,7 @@ const Tab = createBottomTabNavigator();
 
 export default function TabContainer(){
     return(
-        <NavigationContainer independent={true}>
+        <NavigationContainer>
             <Tab.Navigator
                 initialRouteName={homeName}
                 screenOptions = {({route}) => ({
@@ -46,7 +46,7 @@ export default function TabContainer(){
                 })}
                 >
                 
-                <Tab.Screen name={homeName} component= { HomeScreen } options={ {title : "Home" , headerTitleAlign:'center' } }/>
+                <Tab.Screen name={homeName} component= { HomeStackScreen } options={ {title : "Home" , headerTitleAlign:'center' } }/>
                 <Tab.Screen name={claimName} component= { ClaimScreen } options={{ headerTitleAlign:'center' }} />
                 <Tab.Screen name={profileName} component= { ProfileScreen } options={{ headerTitleAlign:'center' }} />
 

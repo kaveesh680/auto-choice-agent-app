@@ -5,11 +5,7 @@ import { Flex, Spacer, Heading, ScrollView } from "native-base";
 import  CustomButton  from "../components/CustomButton";
 import ClaimTile from "../components/ClaimTile";
 
-import { useNavigation } from '@react-navigation/native';
-
-export default function HomeScreen() {
-
-    const navigation = useNavigation();
+export default function HomeScreen({navigation}) {
 
     const [username, setUserName] = useState('Kaveesh'); 
     const [claims, setClaims]  = useState([1,2,3,4,5]);
@@ -17,7 +13,7 @@ export default function HomeScreen() {
     const imageCustomer =  require('../assets/agent-blue.png');
     const imageVehicle =  require('../assets/vehicle.png');
 
-    const buttonPress = (nav) => navigation.navigate(`${nav}`)
+    const buttonPress = (nav) => navigation.navigate(nav);
 
   return (
     <View style={styles.mainContainer}>
@@ -29,7 +25,7 @@ export default function HomeScreen() {
         </Flex>
 
         <Flex direction="row" mb="2.5" mt="7"> 
-          <CustomButton text1='Register' text2='Customer' image={imageCustomer} buttonPress={()=>buttonPress('Home')}/>
+          <CustomButton text1='Register' text2='Customer' image={imageCustomer} buttonPress={()=>buttonPress('New_Customer')}/>
           <Spacer />
           <CustomButton text1='Register' text2='Vehicle' image={imageVehicle} buttonPress={()=>buttonPress('Home')}/>
         </Flex> 

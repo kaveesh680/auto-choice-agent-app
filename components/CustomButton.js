@@ -3,6 +3,7 @@ import { Image, View, Text, TouchableOpacity} from 'react-native';
 
 const CustomButton = (props) =>{
     return (
+        <View>
         <TouchableOpacity onPress={props.buttonPress}>
               <View style={{ flexDirection: 'row', alignItems: 'center', borderWidth:1, backgroundColor:'white', borderColor:'white', borderRadius:10, paddingRight:10}}>
                    <Image 
@@ -20,6 +21,8 @@ const CustomButton = (props) =>{
                   </View>
               </View>
           </TouchableOpacity>
+
+          </View>
     );
 }
 
