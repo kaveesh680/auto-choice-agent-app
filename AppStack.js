@@ -5,6 +5,8 @@ import { AuthContext } from "./context/AuthContext";
 import { ActivityIndicator, View } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
 
+import  TabContainer from "./screens/TabContainer";
+
 const Stack = createStackNavigator();
 
 export const AppStack = () => {
@@ -27,13 +29,10 @@ export const AppStack = () => {
                         <Stack.Screen name="SignIn" component={SignInScreen}/>
                     </Stack.Navigator>
                 ) :
-                (
-                    <Stack.Navigator initialRouteName="Home" screenOptions={{headerShown:false}} >
-                        <Stack.Screen name="Home" component={HomeScreen}/>
-                        {/* <Stack.Screen name="Scanner" component={ScannerScreen} />
-                        <Stack.Screen name="Claim" component={ClaimScreen}/> */}
-                    </Stack.Navigator>
-                )}
+                
+                    <TabContainer />
+                
+                }
         </>
     )
 }
