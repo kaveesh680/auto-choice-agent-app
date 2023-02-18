@@ -1,8 +1,9 @@
 import React,{ useState } from 'react';
-import { StyleSheet, Image, View, Text, TouchableOpacity} from 'react-native';
-import { Flex, Spacer, Heading } from "native-base";
+import { StyleSheet, Image, View} from 'react-native';
+import { Flex, Spacer, Heading, ScrollView } from "native-base";
 
 import  CustomButton  from "../components/CustomButton";
+import ClaimTile from "../components/ClaimTile";
 
 import { useNavigation } from '@react-navigation/native';
 
@@ -11,6 +12,7 @@ export default function HomeScreen() {
     const navigation = useNavigation();
 
     const [username, setUserName] = useState('Kaveesh'); 
+    const [claims, setClaims]  = useState([1,2,3,4,5]);
 
     const imageCustomer =  require('../assets/agent-blue.png');
     const imageVehicle =  require('../assets/vehicle.png');
@@ -35,7 +37,17 @@ export default function HomeScreen() {
 
 
       <View style={styles.middleContainer}>
-    
+
+      <ScrollView>
+        <View style={{paddingHorizontal:40, paddingVertical:10}}>
+          <Heading color="#154897" marginBottom='5' marginTop={5}>ACTIVE CLAIMS</Heading>
+
+          <View>
+            <ClaimTile />
+           </View>
+
+        </View>
+      </ScrollView>
       
 
       </View>
@@ -58,8 +70,6 @@ const styles = StyleSheet.create({
     width:65
   },
   middleContainer:{
-    paddingVertical:20,
-    paddingHorizontal:40,
-    height:'60%'
+    height:'70%'
   }
 });

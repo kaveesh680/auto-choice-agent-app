@@ -23,16 +23,16 @@ export const AppStack = () => {
 
     return (
         <>
-            {userToken === null ?
+            {/* {userToken === null ?
                 (
                     <Stack.Navigator initialRouteName="SignIn" screenOptions={{headerShown:false}} >
                         <Stack.Screen name="SignIn" component={SignInScreen}/>
                     </Stack.Navigator>
-                ) :
+                ) : */}
                 
                     <TabContainer />
                 
-                }
+                {/* } */}
         </>
     )
 }
