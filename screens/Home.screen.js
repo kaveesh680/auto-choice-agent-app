@@ -21,6 +21,8 @@ export default function HomeScreen({navigation}) {
 
     const buttonPress = (nav) => navigation.navigate(nav);
 
+    const viewClaim =(claim_id)=>{navigation.navigate('View_Claim',{claim_id})}
+
   return (
     <View style={styles.mainContainer}>
       <View style={styles.topContainer}>
@@ -48,7 +50,7 @@ export default function HomeScreen({navigation}) {
 
             {
               claims.map((claim)=>(
-                <ClaimTile key={claim.claim_id} id={claim.claim_id} name={claim.customer_name} date={claim.date} status={claim.status} />
+                <ClaimTile key={claim.claim_id} id={claim.claim_id} name={claim.customer_name} date={claim.date} status={claim.status} viewClaim={()=>viewClaim(claim.claim_id)} />
               ))
             }
 

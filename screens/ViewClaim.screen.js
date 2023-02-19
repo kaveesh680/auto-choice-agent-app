@@ -8,7 +8,10 @@ import TextHeader from "../components/TextHeader";
 
 
 
-export default function ViewClaimScreen() {
+export default function ViewClaimScreen({route}) {
+
+    console.log("Route parameters: ", route.params)
+    //useeffect function to get details about claim
 
     const navigation = useNavigation();
     const claimId = '234234nwern3';

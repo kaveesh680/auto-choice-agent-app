@@ -5,7 +5,7 @@ import { Badge, Spacer } from 'native-base';
 
 const ClaimTile = (props) =>{
     return (
-        <TouchableOpacity>
+        <TouchableOpacity onPress={props.viewClaim}>
               <View style={{ flexDirection: 'row', alignItems: 'center', borderWidth:1, backgroundColor:'#3774CE', borderColor:'#3774CE', borderRadius:10, padding:15, marginBottom:15}}>
                     <View style={{ flexDirection: 'column', alignItems: 'light' }}>
                       <Text style={{ marginLeft: 1, fontSize: 15, color: 'white', fontWeight:'600', marginBottom:3, width:150 }} numberOfLines={1}>
