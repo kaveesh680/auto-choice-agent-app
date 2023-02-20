@@ -11,6 +11,7 @@ const FormInput = (props) =>{
                   onChangeText={props.setFunction}
                   borderColor={'#3774CE'}
                   size={'xl'}
+                  type={`${props.type}`}
               />
               <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>
                 {props.validationText}

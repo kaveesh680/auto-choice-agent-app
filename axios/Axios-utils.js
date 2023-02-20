@@ -3,7 +3,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // pasan -  172.20.10.2
 // kaveesh - 10.10.6.199
-const client = axios.create({ baseURL: 'http://172.20.10.2:3000/api' });
+const client = axios.create({ baseURL: 'http://10.10.6.199:3000/api' });
 
 export const request = async ({...options}) => {
     client.defaults.headers.common.Authorization = await AsyncStorage.getItem('userToken');

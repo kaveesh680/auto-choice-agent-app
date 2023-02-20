@@ -1,20 +1,17 @@
-import React,{ useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import { StyleSheet, View} from 'react-native';
-
 import { useNavigation } from '@react-navigation/native';
-import {Icon, IconButton, ScrollView, Text, Image, TextArea, Button} from "native-base";
+import {Icon, IconButton, ScrollView, Text, Image, TextArea, Button, useToast} from "native-base";
 import { Entypo } from "@expo/vector-icons";
 import TextHeader from "../components/TextHeader";
-
-
+import { getClaimDetails, validateClaim } from "../services/service";
 
 export default function ViewClaimScreen({route}) {
 
-    console.log("Route parameters: ", route.params)
-    //useeffect function to get details about claim
+    const [claimId] = useState(route.params.claim_id);
+    const [claimDetails, setClaimDetails] = useState(null);
 
     const navigation = useNavigation();
-    const claimId = '234234nwern3';
     const damageImageList = [
         'https://wallpaperaccess.com/full/317501.jpg',
         'https://wallpaperaccess.com/full/317501.jpg',
@@ -24,10 +21,21 @@ export default function ViewClaimScreen({route}) {
     ];
 
     const [comment,setComment] = useState('');
-    const [status,setStatus] = useState(null);
+    const toast = useToast();
+    useEffect(() => {
+        getClaimDetails(claimId).then((response)=>{
+            setClaimDetails(response.data.data[0]);
+        })
+    }, [claimId])
 
-    const handleStatus = (status)=>{
-        setStatus(status)
+    const onSubmit = (status) => {
+        const data = {
+            claimId,
+            comment,
+            approve: status
+        }
+        validateClaim(data);
+        navigation.navigate('Home');
     }
 
     return (
@@ -41,18 +49,18 @@ export default function ViewClaimScreen({route}) {
                         borderRadius="full"
                         onPress={()=>navigation.navigate('Home')}
                     />
-                    <Text style={styles.claimIdText} fontSize={'3xl'}>{`#${claimId}`}</Text>
+                    <Text style={styles.claimIdText} fontSize={'3xl'} numberOfLines={1}>{`#${claimId}`}</Text>
                 </View>
                 <View style={styles.nameBar}>
                     <Text fontSize={'xl'} color={'#154897'}>Customer</Text>
-                    <Text fontSize={'3xl'} color={'#154897'}>Kaveesh Charuka</Text>
+                    <Text fontSize={'3xl'} color={'#154897'}>{claimDetails?.first_name + " " + claimDetails?.last_name}</Text>
                 </View>
                 <View style={styles.locationAndTimeView}>
                     <View style={styles.dataTimeView}>
                         <Image alt='date-time-image' source={require('../assets/date-time.png')} style={styles.dataTimeImage} />
                         <View style={{display: 'flex', alignSelf: 'center'}}>
-                            <Text color='white'>2022/12/12</Text>
-                            <Text color='white'>12.23AM</Text>
+                            <Text color='white'>{claimDetails?.datetime.split(" ")[0]}</Text>
+                            <Text color='white'>{claimDetails?.datetime.split(" ")[1]}</Text>
                         </View>
                     </View>
                     <View style={styles.dataTimeView}>
@@ -83,7 +91,7 @@ export default function ViewClaimScreen({route}) {
                                 color='#154897'
                                 style={{marginTop: 5}}
                             >
-                                Toyoto Vitz
+                                {claimDetails?.model}
                             </Text>
                         </View>
                         <View>
@@ -93,7 +101,7 @@ export default function ViewClaimScreen({route}) {
                                 color='#154897'
                                 style={{marginTop: 5}}
                             >
-                                CEB-1233
+                                {claimDetails?.number}
                             </Text>
                         </View>
                     </View>
@@ -123,7 +131,7 @@ export default function ViewClaimScreen({route}) {
                     <View style={{marginTop: 10}}>
                         <TextHeader text='DESCRIPTION' />
                         <Text>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                            {claimDetails?.description}
                         </Text>
                     </View>
                 </View>
@@ -150,7 +158,7 @@ export default function ViewClaimScreen({route}) {
                                 color='white'
                                 style={{marginTop: 5}}
                             >
-                                2500000 LKR 
+                                {claimDetails?.estimate_value + " "}LKR
                             </Text>
                         </View>
 
@@ -162,8 +170,6 @@ export default function ViewClaimScreen({route}) {
                         </View>
                     </View>
                 </View>
-
-                {/* Approve/ Decline */}
 
                 <View
                     style={{
@@ -191,7 +197,12 @@ export default function ViewClaimScreen({route}) {
 
                     <View style={{display:'flex', flexDirection: 'row', justifyContent:'space-between', marginTop:20}}>
                         <Button 
-                            onPress={() => handleStatus(true)} 
+                            onPress={() => {
+                                onSubmit('accepted');
+                                toast.show({
+                                    description: 'Claim Accepted!'
+                                })
+                            }}
                             backgroundColor='#3EB134'
                             width={'45%'}   
                         >
@@ -199,7 +210,12 @@ export default function ViewClaimScreen({route}) {
                         </Button>
 
                         <Button 
-                            onPress={() => handleStatus(false)} 
+                            onPress={() => {
+                                onSubmit('declined');
+                                toast.show({
+                                    description: 'Claim Declined!'
+                                })
+                            }}
                             backgroundColor='#CE3760'
                             width={'45%'} 
                         >
@@ -236,7 +252,8 @@ const styles = StyleSheet.create({
     claimIdText: {
         display: 'flex',
         alignSelf: 'center',
-        color: 'white'
+        color: 'white',
+        width: 250,
     },
     nameBar: {
         backgroundColor: 'white',

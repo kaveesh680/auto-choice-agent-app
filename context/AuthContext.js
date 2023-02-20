@@ -6,19 +6,23 @@ export const AuthContext = createContext();
 export const AuthProvider = ({children}) => {
     const [isLoading, setIsLoading] = useState(true);
     const [userToken, setUserToken] = useState('');
+    const [successMessage, setSuccessMessage] = useState('');
+    const [userDetails, setUserDetails] = useState(null);
 
     // pasan -  172.20.10.2
     // kaveesh - 10.10.6.199
 
     const login = async (username, password) => {
         setIsLoading(true);
-        Axios.post('http://172.20.10.2:3000/api/auth/login',
+        Axios.post('http://10.10.6.199:3000/api/auth/login',
             { userName:username, password:password }).
         then(async(response) => {
             if (response.data.data){
                 setUserToken(response.data.data.jwt);
                 await AsyncStorage.setItem('userToken', response.data.data.jwt);
-            }     
+            }
+            setUserDetails(response.data.data);
+            setSuccessMessage(response.data?.message);
         }).catch((err) => {
             console.log(err);
         })
@@ -53,7 +57,7 @@ export const AuthProvider = ({children}) => {
     }, []);
 
     return (
-        <AuthContext.Provider value={{login, logout, isLoading, userToken}} >
+        <AuthContext.Provider value={{login, logout, isLoading, userToken, successMessage, userDetails}} >
             {children}
         </AuthContext.Provider>
     )
