@@ -6,6 +6,7 @@ import { ActivityIndicator, View } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
 
 import  TabContainer from "./screens/TabContainer";
+import { NavigationContainer } from "@react-navigation/native";
 
 const Stack = createStackNavigator();
 
@@ -23,16 +24,18 @@ export const AppStack = () => {
 
     return (
         <>
-            {/* {userToken === null ?
-                (
-                    <Stack.Navigator initialRouteName="SignIn" screenOptions={{headerShown:false}} >
-                        <Stack.Screen name="SignIn" component={SignInScreen}/>
-                    </Stack.Navigator>
-                ) : */}
+            {userToken === null ?
+                (   
+                    <NavigationContainer>
+                        <Stack.Navigator initialRouteName="SignIn" screenOptions={{headerShown:false}} >
+                            <Stack.Screen name="SignIn" component={SignInScreen}/>
+                        </Stack.Navigator>
+                    </NavigationContainer>
+                ) :
                 
                     <TabContainer />
                 
-                {/* } */}
+                } 
         </>
     )
 }

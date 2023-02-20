@@ -46,7 +46,7 @@ export const AuthProvider = ({children}) => {
 
     useEffect(() => {
         isLoggedIn();
-        logout();
+        // logout();
         // let userToken = AsyncStorage.getItem('userToken');
         // console.log(userToken);
         // console.log('fdfdf')

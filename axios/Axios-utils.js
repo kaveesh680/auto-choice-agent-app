@@ -7,7 +7,6 @@ const client = axios.create({ baseURL: 'http://172.20.10.2:3000/api' });
 
 export const request = async ({...options}) => {
     client.defaults.headers.common.Authorization = await AsyncStorage.getItem('userToken');
-    console.log(await AsyncStorage.getItem('userToken'));
     const onSuccess = (response) => response;
     const onError = (error) => {
         return error;
