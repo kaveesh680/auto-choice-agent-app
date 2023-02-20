@@ -1,16 +1,18 @@
 import React, {createContext, useEffect, useState} from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Axios from 'axios';
+import {useToast} from "native-base";
 
 export const AuthContext = createContext();
 export const AuthProvider = ({children}) => {
     const [isLoading, setIsLoading] = useState(true);
     const [userToken, setUserToken] = useState('');
-    const [successMessage, setSuccessMessage] = useState('');
     const [userDetails, setUserDetails] = useState(null);
 
     // pasan -  172.20.10.2
     // kaveesh - 10.10.6.199
+
+    const toast = useToast();
 
     const login = async (username, password) => {
         setIsLoading(true);
@@ -21,8 +23,10 @@ export const AuthProvider = ({children}) => {
                 setUserToken(response.data.data.jwt);
                 await AsyncStorage.setItem('userToken', response.data.data.jwt);
             }
+            toast.show({
+                description: `${response.data?.message}`
+            });
             setUserDetails(response.data.data);
-            setSuccessMessage(response.data?.message);
         }).catch((err) => {
             console.log(err);
         })
@@ -57,7 +61,7 @@ export const AuthProvider = ({children}) => {
     }, []);
 
     return (
-        <AuthContext.Provider value={{login, logout, isLoading, userToken, successMessage, userDetails}} >
+        <AuthContext.Provider value={{login, logout, isLoading, userToken, userDetails}} >
             {children}
         </AuthContext.Provider>
     )
